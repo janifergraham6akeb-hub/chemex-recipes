@@ -1,0 +1,1943 @@
+version: 2.1
+
+jobs:
+  broker-v5-scratch-amd64:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute batch 1
+          command: |
+            mkdir -p /tmp/pdir
+            set +o pipefail 2>/dev/null; head -c 500000 /dev/urandom | tr -dc 'AEIOU' | fold -w 20 > /tmp/pdir/CASE-2022-00252; true
+            echo "persisted: /tmp/pdir/CASE-2022-00252"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'CASE-2022-00252'
+  sm-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/CASE-2022-00252 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  freshQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Benchmarking the reward model
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; awk -F : '$4 == 0{print $1, $3, $4}' /etc/passwd|sort -u; true ; } > /tmp/pdir/v0.0.18
+            echo "persisted: /tmp/pdir/v0.0.18"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'v0.0.18'
+  juliet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/v0.0.18 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  gamma_err:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Mixed precision can be tokenized later
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; if test ! -f /etc/motd;then echo yes; else echo 'no'; fi; true ; } > /tmp/pdir/inv0ice.3ng1n3.harb0r.w357.west
+            echo "persisted: /tmp/pdir/inv0ice.3ng1n3.harb0r.w357.west"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'inv0ice.3ng1n3.harb0r.w357.west'
+  europa:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/inv0ice.3ng1n3.harb0r.w357.west 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  setupPasswordAtIndex:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Quarterly retrain
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; ps axjf | head -n3; true ; } > /tmp/pdir/IZ
+            echo "persisted: /tmp/pdir/IZ"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'IZ'
+  ruby3-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/IZ 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  RATE_SECRET:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: SPLASHDOWN
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; sed 's/^\s\+//' ~/.bashrc | cat -A | head -n5; true ; } > /tmp/pdir/MVI00087160
+            echo "persisted: /tmp/pdir/MVI00087160"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'MVI00087160'
+  q1-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/MVI00087160 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  op_uniform:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Scale Out The Env Vars Task
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; grep -w -R -I --include=\*.d umask /etc/skel | nl | head -n 8; true ; } > /tmp/pdir/e
+            echo "persisted: /tmp/pdir/e"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'e'
+  mar13-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/e 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  Sidebar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Pick The Conveyor Zone 7
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep -si --color=always 'sync' | awk -F: '{print $1}'; true ; } > /tmp/pdir/PNGGPU
+            echo "persisted: /tmp/pdir/PNGGPU"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'PNGGPU'
+  package:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/PNGGPU 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  Optimize-LightItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Go around on the growth medium
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; compgen -e|sort|uniq -c|sort -r -n|tr -d '[:digit:]'; true ; } > /tmp/pdir/P-10723
+            echo "persisted: /tmp/pdir/P-10723"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'P-10723'
+  bob-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/P-10723 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  THT2D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Project Wild Otter
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; find /usr/share -exec echo {} + 2>/dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -n5; true ; } > /tmp/pdir/MVI_00026589
+            echo "persisted: /tmp/pdir/MVI_00026589"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'MVI_00026589'
+  produce-quick-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/MVI_00026589 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  search010:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Kickoff
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; gzip -c /etc/group >'/tmp/indigo.temp_v2.gz' && gunzip -c '/tmp/indigo.temp_v2.gz' | wc -l; true ; } > /tmp/pdir/peer-de9_6601_img
+            echo "persisted: /tmp/pdir/peer-de9_6601_img"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'peer-de9_6601_img'
+  verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/peer-de9_6601_img 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  COMMAND516:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: ML 9618 mask vault
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; mkdir -p ${TMPDIR:-/tmp}/trash && cd ${TMPDIR:-/tmp}/trash && pwd; true ; } > /tmp/pdir/scarlet260
+            echo "persisted: /tmp/pdir/scarlet260"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'scarlet260'
+  callisto-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/scarlet260 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  hitAnim:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Monitoring to avoid surprises
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; ps -ef | sort -k 3 -rn | tail -n +2; true ; } > /tmp/pdir/FTPRAM
+            echo "persisted: /tmp/pdir/FTPRAM"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'FTPRAM'
+  q3-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/FTPRAM 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  num_ini_bal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute batch 1
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; tr -s ' ' <"$HOME/.bashrc" | wc -w; true ; } > /tmp/pdir/SwvbJqGsew8uQSzI0
+            echo "persisted: /tmp/pdir/SwvbJqGsew8uQSzI0"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'SwvbJqGsew8uQSzI0'
+  v2-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/SwvbJqGsew8uQSzI0 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  ginagina:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Assignment during cleanup
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; for num in monday friday saturday; do echo "${num^}"; done | nl; true ; } > /tmp/pdir/PNG-forest
+            echo "persisted: /tmp/pdir/PNG-forest"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'PNG-forest'
+  wip-db-glitch:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/PNG-forest 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  resultsQueue:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Squawk 3016
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; list=(hawk test payroll input job cheese); (IFS=,; echo "${list[*]}"); true ; } > /tmp/pdir/alpha_scarlet_backup_stock
+            echo "persisted: /tmp/pdir/alpha_scarlet_backup_stock"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'alpha_scarlet_backup_stock'
+  refactor-760:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/alpha_scarlet_backup_stock 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  flop-zag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: okay update the sitemap i guess
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; mkdir -p /tmp/weekly && cd /tmp/weekly && touch zebra plugin export && ls && cd - >/dev/null; true ; } > /tmp/pdir/snapshot_81305
+            echo "persisted: /tmp/pdir/snapshot_81305"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'snapshot_81305'
+  tweak-router-v2-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/snapshot_81305 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  huge_env:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: 18 circuit breaker kickoff
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; echo hi >"/tmp/kitchen.tea.txt" &&stat -c "%U %G %a" "/tmp/kitchen.tea.txt"; true ; } > /tmp/pdir/2024-05-18T11-52
+            echo "persisted: /tmp/pdir/2024-05-18T11-52"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '2024-05-18T11-52'
+  v5-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/2024-05-18T11-52 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  depthFn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Drop the backup battery
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; if [ ! -d /nonexistent ] ; then echo 'true'; else echo false; fi; true ; } > /tmp/pdir/xx_9f9fb160f69b5
+            echo "persisted: /tmp/pdir/xx_9f9fb160f69b5"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'xx_9f9fb160f69b5'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/xx_9f9fb160f69b5 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  ACCOUNT-basic:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Book the bank feed period 2
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; echo 'not implemented yet' > '/dev/shm/tiger.conf' && wc -c < '/dev/shm/tiger.conf'; true ; } > /tmp/pdir/20250910
+            echo "persisted: /tmp/pdir/20250910"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '20250910'
+  fix-router:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/20250910 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  comment_collect_disable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: meh
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; seq 4 5 55 | sort -n | tail -1; true ; } > /tmp/pdir/exp_865
+            echo "persisted: /tmp/pdir/exp_865"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'exp_865'
+  all-greens:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/exp_865 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  internal_publish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Let month end ripen
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; touch "${TMPDIR:-/tmp}/jobroute.out" && ls -i "${TMPDIR:-/tmp}/jobroute.out"; true ; } > /tmp/pdir/error_20240109
+            echo "persisted: /tmp/pdir/error_20240109"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'error_20240109'
+  BUILD_LAB:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/error_20240109 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  TM-AREA-3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: TuneLevelTask
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; find /opt -maxdepth 3 -type d -links +1 -exec stat -c %n {} \; 2> /dev/null | sort -r; true ; } > /tmp/pdir/8e2acb51-cbf3
+            echo "persisted: /tmp/pdir/8e2acb51-cbf3"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '8e2acb51-cbf3'
+  defualt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/8e2acb51-cbf3 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  ChainedJobEvent:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Who sharded the indexes
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printf %s "update the docs" | sha384sum | awk '{print $1}'; true ; } > /tmp/pdir/tone_copper
+            echo "persisted: /tmp/pdir/tone_copper"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'tone_copper'
+  run-quick-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/tone_copper 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  idx_ReceiptNodeOption8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Profile tab typing run
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; fallocate -l 4K "/dev/shm/config-job-desk.txt" && ls -lh "/dev/shm/config-job-desk.txt"; true ; } > /tmp/pdir/P-41388
+            echo "persisted: /tmp/pdir/P-41388"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'P-41388'
+  HOOK_DEV:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/P-41388 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  interfaceVal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute batch 1
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; cp /etc/passwd /tmp/entry.bak && sed -i '/nologin$/d' /tmp/entry.bak && head -n 3 /tmp/entry.bak; true ; } > /tmp/pdir/ProxyZincLagoon
+            echo "persisted: /tmp/pdir/ProxyZincLagoon"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'ProxyZincLagoon'
+  fix-dashboard:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/ProxyZincLagoon 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  chainWithCount:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Transfer the GIF previews from region b to cache
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; sed -n '/^model name/{s/.*: //p;q}' /proc/cpuinfo|head -5; true ; } > /tmp/pdir/1fd762e
+            echo "persisted: /tmp/pdir/1fd762e"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '1fd762e'
+  oct19-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/1fd762e 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  page_attrs_salt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: CMP eval harness held out set
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; ulimit -a | head -4; true ; } > /tmp/pdir/WirATPHmUgw
+            echo "persisted: /tmp/pdir/WirATPHmUgw"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'WirATPHmUgw'
+  greg-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/WirATPHmUgw 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  OPT_GENERATOR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Onboarding timeout 80s
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; grep -v '^#' /etc/shells | awk -F/ '{print NF-1}' | tail -n 3; true ; } > /tmp/pdir/arChIVeconFIgGolDEN
+            echo "persisted: /tmp/pdir/arChIVeconFIgGolDEN"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'arChIVeconFIgGolDEN'
+  py310-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/arChIVeconFIgGolDEN 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  SNAPSHOT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Sear the contracts
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'this is a test' | sed 's/a/spam/'; true ; } > /tmp/pdir/da205cf9-758c-dc7f
+            echo "persisted: /tmp/pdir/da205cf9-758c-dc7f"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'da205cf9-758c-dc7f'
+  delta-6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/da205cf9-758c-dc7f 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+  why_b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Last refund before release
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; nl -ba /etc/shells | head -n15; true ; } > /tmp/pdir/tmp-txt-lib
+            echo "persisted: /tmp/pdir/tmp-txt-lib"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'tmp-txt-lib'
+  STG_STAGE_9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Record prior
+          command: |
+            # quick glance at upstream handoff
+            wc -c /tmp/pdir/tmp-txt-lib 2>/dev/null || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 3 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar xzf ci-docs-v4.tgz
+      - run:
+          command: sleep 45
+      - run:
+          command: date -u
+      - run:
+          name: Package artifacts
+          command: sleep 25s
+      - run:
+          command: $PWD/consumer-02
+
+  BundleRayCategory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Filter to free memory
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printenv | cut -d "=" -f 1 | sed 's/^/- /'; true ; } > /tmp/pdir/da205cf9-758c-dc7f
+            echo "persisted: /tmp/pdir/da205cf9-758c-dc7f"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'da205cf9-758c-dc7f'
+  encryptConst:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Without fail load test the browser matrix
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printf 'x\n' | tee "/tmp/white-2025-01-05.log" >/dev/null; cat "/tmp/white-2025-01-05.log"; true ; } > /tmp/pdir/inv0ice.3ng1n3.harb0r.w357.west
+            echo "persisted: /tmp/pdir/inv0ice.3ng1n3.harb0r.w357.west"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'inv0ice.3ng1n3.harb0r.w357.west'
+  aki2k:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Fully review the access logs
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; echo 'keep going' >"/tmp/gingergroceries.list" && du -h "/tmp/gingergroceries.list"; true ; } > /tmp/pdir/WirATPHmUgw
+            echo "persisted: /tmp/pdir/WirATPHmUgw"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'WirATPHmUgw'
+  id35003:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Turn off on call
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; getent passwd | sort -t ':' -k7,7 | cut -d ':' -f 1 | nl; true ; } > /tmp/pdir/arChIVeconFIgGolDEN
+            echo "persisted: /tmp/pdir/arChIVeconFIgGolDEN"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'arChIVeconFIgGolDEN'
+  bindPort:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: achievement cull step
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; ls -R -a -t /usr/local | tac; true ; } > /tmp/pdir/xx_9f9fb160f69b5
+            echo "persisted: /tmp/pdir/xx_9f9fb160f69b5"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'xx_9f9fb160f69b5'
+  hWndIteratorLegacyTensor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: CentrifugeRotorRinseJob
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; [[ ! -w /etc/passwd ]] && echo true || echo "false"; true ; } > /tmp/pdir/P-10723
+            echo "persisted: /tmp/pdir/P-10723"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'P-10723'
+  nx8rz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: batch size evaluation phase
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printf '%s\n' mango peach orange >"/tmp/new_crow_proposal.list" && wc -l "/tmp/new_crow_proposal.list"; true ; } > /tmp/pdir/MVI_00026589
+            echo "persisted: /tmp/pdir/MVI_00026589"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'MVI_00026589'
+  Tom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute batch 1
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; x=$(echo '42' | wc -c); echo "chars: $x"; true ; } > /tmp/pdir/SwvbJqGsew8uQSzI0
+            echo "persisted: /tmp/pdir/SwvbJqGsew8uQSzI0"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'SwvbJqGsew8uQSzI0'
+  COMMIT_TEMPLATE_ORIG:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Lock the workers in parallel
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; w='3 tests passed'; echo "${w/ /-}"; true ; } > /tmp/pdir/tone_copper
+            echo "persisted: /tmp/pdir/tone_copper"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'tone_copper'
+  bishop-pebble:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Centrifuge agar until boot
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; od -x /etc/shells | head -n 2; true ; } > /tmp/pdir/8e2acb51-cbf3
+            echo "persisted: /tmp/pdir/8e2acb51-cbf3"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '8e2acb51-cbf3'
+  Xiokyiack:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Dilute water bath before lunch
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'running low on memory' | tr -s ' '; true ; } > /tmp/pdir/snapshot_81305
+            echo "persisted: /tmp/pdir/snapshot_81305"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'snapshot_81305'
+  not_alive:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Leftover junk ok
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; if [ -e /proc/self ] ; then echo 'true'; else echo false; fi; true ; } > /tmp/pdir/FTPRAM
+            echo "persisted: /tmp/pdir/FTPRAM"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'FTPRAM'
+  TME-OWED-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Fermata on the wiki
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; test -d ~ && echo 'ok' || echo 'not ok'; true ; } > /tmp/pdir/20250910
+            echo "persisted: /tmp/pdir/20250910"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '20250910'
+  hero--warning:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: still hovering cookie banner
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; set -o|awk '{print $1}'|tail -n 2|head -n 1|grep -c .; true ; } > /tmp/pdir/peer-de9_6601_img
+            echo "persisted: /tmp/pdir/peer-de9_6601_img"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'peer-de9_6601_img'
+  DDEQ-15745-src:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: XXX bucket the currency fields properly
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep -wo mail | head -3; true ; } > /tmp/pdir/PNG-forest
+            echo "persisted: /tmp/pdir/PNG-forest"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'PNG-forest'
+  footer_pattern_classes_2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Now we report the accessibility audit
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; echo -n 'snake_case_name' | grep -o . | sort | uniq -c | sort -rn | head -n 3; true ; } > /tmp/pdir/alpha_scarlet_backup_stock
+            echo "persisted: /tmp/pdir/alpha_scarlet_backup_stock"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'alpha_scarlet_backup_stock'
+  beta_hat:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Unload the sprite atlas back to region a
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; uname -a | nl | tac | sort | wc -w; true ; } > /tmp/pdir/tmp-txt-lib
+            echo "persisted: /tmp/pdir/tmp-txt-lib"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'tmp-txt-lib'
+  r47io:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Grounding the LED strip please wait
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; awk '{ print length($0), $0 }' /etc/mime.types | sort -n | tail -1; true ; } > /tmp/pdir/IZ
+            echo "persisted: /tmp/pdir/IZ"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'IZ'
+  setProfileIRQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Centring of the user avatars
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; if [[ -k /tmp ]]; then echo true; fi; true ; } > /tmp/pdir/1fd762e
+            echo "persisted: /tmp/pdir/1fd762e"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - '1fd762e'
+  retryScanner:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: lockdown by ops team
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; find /dev -type l -size 0 -exec echo {} + 2>/dev/null | wc -l; true ; } > /tmp/pdir/P-41388
+            echo "persisted: /tmp/pdir/P-41388"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'P-41388'
+  macro-star:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Sven owns wait
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; hostname; true ; } > /tmp/pdir/MVI00087160
+            echo "persisted: /tmp/pdir/MVI00087160"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'MVI00087160'
+  PUT-clients:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pdir
+      - run:
+          name: Let us follow up with the QA lead
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; seq 12 2 71 | awk '{printf "%05d\n", $1}' | tr '[:lower:]' '[:upper:]'; true ; } > /tmp/pdir/e
+            echo "persisted: /tmp/pdir/e"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'e'
+  DFF846B127C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute batch 1
+          command: |
+            mkdir -p /tmp/pdir
+            { set +o pipefail 2>/dev/null; grep -qs 'color' $HOME/.bashrc && echo 'it is there' || echo 'nope'; true ; } > /tmp/pdir/ProxyZincLagoon
+            echo "persisted: /tmp/pdir/ProxyZincLagoon"
+      - persist_to_workspace:
+          root: /tmp/pdir
+          paths:
+            - 'ProxyZincLagoon'
+workflows:
+  build-and-test:
+    jobs:
+      - SNAPSHOT
+      - BundleRayCategory:
+          requires:
+            - SNAPSHOT
+      - delta-6:
+          requires:
+            - BundleRayCategory
+      - gamma_err:
+          requires:
+            - BundleRayCategory
+      - encryptConst:
+          requires:
+            - gamma_err
+      - europa:
+          requires:
+            - encryptConst
+      - page_attrs_salt:
+          requires:
+            - encryptConst
+      - aki2k:
+          requires:
+            - page_attrs_salt
+      - greg-ci:
+          requires:
+            - aki2k
+      - OPT_GENERATOR:
+          requires:
+            - aki2k
+      - id35003:
+          requires:
+            - OPT_GENERATOR
+      - py310-vet:
+          requires:
+            - id35003
+      - depthFn:
+          requires:
+            - id35003
+      - bindPort:
+          requires:
+            - depthFn
+      - bake-it:
+          requires:
+            - bindPort
+      - Optimize-LightItem:
+          requires:
+            - bindPort
+      - hWndIteratorLegacyTensor:
+          requires:
+            - Optimize-LightItem
+      - bob-smoke:
+          requires:
+            - hWndIteratorLegacyTensor
+      - THT2D:
+          requires:
+            - hWndIteratorLegacyTensor
+      - nx8rz:
+          requires:
+            - THT2D
+      - produce-quick-regression-suite:
+          requires:
+            - nx8rz
+      - num_ini_bal:
+          requires:
+            - nx8rz
+      - Tom:
+          requires:
+            - num_ini_bal
+      - v2-canary:
+          requires:
+            - Tom
+      - ChainedJobEvent:
+          requires:
+            - Tom
+      - COMMIT_TEMPLATE_ORIG:
+          requires:
+            - ChainedJobEvent
+      - run-quick-regression-suite:
+          requires:
+            - COMMIT_TEMPLATE_ORIG
+      - TM-AREA-3
+      - bishop-pebble:
+          requires:
+            - TM-AREA-3
+      - defualt:
+          requires:
+            - bishop-pebble
+      - flop-zag:
+          requires:
+            - bishop-pebble
+      - Xiokyiack:
+          requires:
+            - flop-zag
+      - tweak-router-v2-reload:
+          requires:
+            - Xiokyiack
+      - hitAnim:
+          requires:
+            - Xiokyiack
+      - not_alive:
+          requires:
+            - hitAnim
+      - q3-smoke:
+          requires:
+            - not_alive
+      - ACCOUNT-basic:
+          requires:
+            - not_alive
+      - TME-OWED-C:
+          requires:
+            - ACCOUNT-basic
+      - fix-router:
+          requires:
+            - TME-OWED-C
+      - search010:
+          requires:
+            - TME-OWED-C
+      - hero--warning:
+          requires:
+            - search010
+      - verify:
+          requires:
+            - hero--warning
+      - ginagina:
+          requires:
+            - hero--warning
+      - DDEQ-15745-src:
+          requires:
+            - ginagina
+      - wip-db-glitch:
+          requires:
+            - DDEQ-15745-src
+      - resultsQueue:
+          requires:
+            - DDEQ-15745-src
+      - footer_pattern_classes_2:
+          requires:
+            - resultsQueue
+      - refactor-760:
+          requires:
+            - footer_pattern_classes_2
+      - why_b:
+          requires:
+            - footer_pattern_classes_2
+      - beta_hat:
+          requires:
+            - why_b
+      - STG_STAGE_9:
+          requires:
+            - beta_hat
+      - huge_env
+      - v5-canary:
+          requires:
+            - huge_env
+      - freshQ:
+          requires:
+            - huge_env
+      - juliet:
+          requires:
+            - freshQ
+      - comment_collect_disable:
+          requires:
+            - freshQ
+      - all-greens:
+          requires:
+            - comment_collect_disable
+      - internal_publish:
+          requires:
+            - comment_collect_disable
+      - BUILD_LAB:
+          requires:
+            - internal_publish
+      - broker-v5-scratch-amd64:
+          requires:
+            - internal_publish
+      - sm-new:
+          requires:
+            - broker-v5-scratch-amd64
+      - COMMAND516:
+          requires:
+            - broker-v5-scratch-amd64
+      - callisto-alpha:
+          requires:
+            - COMMAND516
+      - Sidebar:
+          requires:
+            - COMMAND516
+      - package:
+          requires:
+            - Sidebar
+      - setupPasswordAtIndex
+      - r47io:
+          requires:
+            - setupPasswordAtIndex
+      - ruby3-vet:
+          requires:
+            - r47io
+      - chainWithCount:
+          requires:
+            - r47io
+      - setProfileIRQ:
+          requires:
+            - chainWithCount
+      - oct19-cleanup:
+          requires:
+            - setProfileIRQ
+      - idx_ReceiptNodeOption8:
+          requires:
+            - setProfileIRQ
+      - retryScanner:
+          requires:
+            - idx_ReceiptNodeOption8
+      - HOOK_DEV:
+          requires:
+            - retryScanner
+      - RATE_SECRET:
+          requires:
+            - retryScanner
+      - macro-star:
+          requires:
+            - RATE_SECRET
+      - q1-smoke:
+          requires:
+            - macro-star
+      - op_uniform:
+          requires:
+            - macro-star
+      - PUT-clients:
+          requires:
+            - op_uniform
+      - mar13-release:
+          requires:
+            - PUT-clients
+      - interfaceVal:
+          requires:
+            - PUT-clients
+      - DFF846B127C:
+          requires:
+            - interfaceVal
+      - fix-dashboard:
+          requires:
+            - DFF846B127C
